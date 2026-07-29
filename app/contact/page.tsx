@@ -34,7 +34,7 @@ export default function ContactPage() {
 
             <div className="contact-detail">
               <div className="k">Email</div>
-              <div className="v">enquiries@tyrianadvisory.com</div>
+              <div className="v">contact@tyrianadv.com</div>
             </div>
             <div className="contact-detail">
               <div className="k">Phone</div>

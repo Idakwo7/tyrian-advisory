@@ -56,7 +56,7 @@ export default function AboutPage() {
       <section className="section approach">
         <div className="container">
           <div className="section-head">
-            <span className="eyebrow" style={{ color: "var(--gold-light)" }}>
+            <span className="eyebrow">
               What guides us
             </span>
             <h2>Principles over playbooks.</h2>

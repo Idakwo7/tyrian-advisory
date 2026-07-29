@@ -8,7 +8,7 @@ export default function Home() {
       {/* Hero */}
       <section className="hero">
         <div className="container hero-inner">
-          <span className="eyebrow" style={{ color: "var(--gold-light)" }}>
+          <span className="eyebrow">
             Independent Advisory · Strategy · Capital · Transactions
           </span>
           <h1>
@@ -77,7 +77,7 @@ export default function Home() {
       <section className="section approach" id="approach">
         <div className="container">
           <div className="section-head">
-            <span className="eyebrow" style={{ color: "var(--gold-light)" }}>
+            <span className="eyebrow">
               How we work
             </span>
             <h2>Independent, rigorous, and aligned to your interests.</h2>

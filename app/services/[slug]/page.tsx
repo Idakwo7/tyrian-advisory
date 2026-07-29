@@ -35,7 +35,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
             <Link href="/">Home</Link> · <Link href="/#services">Services</Link> ·{" "}
             {service.title}
           </div>
-          <div className="icon-wrap" style={{ width: 52, height: 52, color: "var(--gold-light)", marginBottom: 20 }}>
+          <div className="icon-wrap" style={{ width: 52, height: 52, color: "var(--gold-dark)", marginBottom: 20 }}>
             <Icon name={service.icon} />
           </div>
           <h1>{service.title}</h1>
