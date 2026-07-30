@@ -1,7 +1,24 @@
 import type { Metadata } from "next";
+import { Quicksand, Noto_Serif } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import SmoothScroll from "@/components/SmoothScroll";
+import Parallax from "@/components/Parallax";
+
+const quicksand = Quicksand({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-quicksand",
+  display: "swap",
+});
+
+const notoSerif = Noto_Serif({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-noto-serif",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -37,8 +54,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${quicksand.variable} ${notoSerif.variable}`}>
       <body>
+        <SmoothScroll />
+        <Parallax />
         <Header />
         <main>{children}</main>
         <Footer />

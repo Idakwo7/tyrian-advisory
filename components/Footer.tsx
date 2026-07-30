@@ -1,10 +1,23 @@
 import Link from "next/link";
 import { services } from "@/lib/services";
+import NotchTop from "@/components/NotchTop";
 
 export default function Footer() {
   return (
     <footer className="site-footer">
+      <NotchTop targetClass="site-footer" clipId="footer-notch" includeBottom={false} />
       <div className="container">
+        <div className="footer-cta">
+          <h2>Let&rsquo;s discuss what&rsquo;s next for your enterprise.</h2>
+          <p>
+            Whether you are shaping strategy, raising capital, or considering a
+            transaction, a conversation is the right place to begin.
+          </p>
+          <Link href="/contact" className="btn btn-gold">
+            Arrange a conversation
+          </Link>
+        </div>
+
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="brand-name">

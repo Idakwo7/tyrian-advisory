@@ -1,24 +1,26 @@
 import Link from "next/link";
-import { services } from "@/lib/services";
-import Icon from "@/components/Icon";
+import HeroStats from "@/components/HeroStats";
+import HeroFloaters from "@/components/HeroFloaters";
+import NotchTop from "@/components/NotchTop";
+import ServicesSlider from "@/components/ServicesSlider";
+import ApproachSteps from "@/components/ApproachSteps";
 
 export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="hero">
+      <section className="hero screen">
+        <HeroFloaters />
         <div className="container hero-inner">
           <span className="eyebrow">
             Independent Advisory · Strategy · Capital · Transactions
           </span>
           <h1>
-            Advising the decisions that <span className="accent">define</span> the
-            enterprise.
+            Every enterprise has <span className="accent">defining moments</span>. We
+            advise them.
           </h1>
           <p>
-            Tyrian Advisory partners with boards, investors and families to shape
-            strategy, structure capital, and execute the transactions that create
-            lasting value.
+          Tyrian Advisory partners with boards, investors, and families to shape strategy, structure capital, and execute the transactions that create lasting value — across Africa's most dynamic markets.
           </p>
           <div className="hero-actions">
             <Link href="/#services" className="btn btn-primary">
@@ -29,25 +31,13 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <div className="num">8</div>
-              <div className="label">Advisory practices</div>
-            </div>
-            <div className="hero-stat">
-              <div className="num">360°</div>
-              <div className="label">Across the balance sheet</div>
-            </div>
-            <div className="hero-stat">
-              <div className="num">1</div>
-              <div className="label">Trusted partner</div>
-            </div>
-          </div>
+          <HeroStats />
         </div>
       </section>
 
       {/* Services */}
-      <section className="section services" id="services">
+      <section className="section services screen" id="services">
+        <NotchTop />
         <div className="container">
           <div className="section-head">
             <span className="eyebrow">What we do</span>
@@ -58,23 +48,12 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="services-grid">
-            {services.map((s) => (
-              <Link key={s.slug} href={`/services/${s.slug}`} className="service-card">
-                <div className="icon-wrap">
-                  <Icon name={s.icon} />
-                </div>
-                <h3>{s.title}</h3>
-                <p>{s.summary}</p>
-                <span className="more">Learn more →</span>
-              </Link>
-            ))}
-          </div>
+          <ServicesSlider />
         </div>
       </section>
 
       {/* Approach */}
-      <section className="section approach" id="approach">
+      <section className="section approach screen" id="approach">
         <div className="container">
           <div className="section-head">
             <span className="eyebrow">
@@ -87,37 +66,24 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="approach-grid">
-            <div className="approach-item">
-              <span className="step">01</span>
-              <h3>Understand</h3>
-              <p>
-                We begin with your objectives, constraints and context — not a
-                template. The right answer starts with the right questions.
-              </p>
-            </div>
-            <div className="approach-item">
-              <span className="step">02</span>
-              <h3>Advise</h3>
-              <p>
-                We bring analytical rigor and candid perspective, laying out
-                options clearly so decisions are made with conviction.
-              </p>
-            </div>
-            <div className="approach-item">
-              <span className="step">03</span>
-              <h3>Execute</h3>
-              <p>
-                We stay in the room through execution — protecting value from
-                mandate to close, and beyond.
-              </p>
-            </div>
-          </div>
+          <ApproachSteps />
         </div>
       </section>
 
+      {/* Quote */}
+      <section className="quote screen">
+        <NotchTop targetClass="quote" clipId="quote-notch" includeBottom />
+        <figure className="quote-panel">
+          <blockquote>
+            We measure our success not by the size of the deal, but by the
+            soundness of the decision.
+          </blockquote>
+          <figcaption>— The Tyrian Advisory principle</figcaption>
+        </figure>
+      </section>
+
       {/* About teaser */}
-      <section className="section" id="about">
+      <section className="section screen" id="about">
         <div className="container about-grid">
           <div className="about-copy">
             <span className="eyebrow">The firm</span>
@@ -151,30 +117,9 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          <div className="about-panel">
-            <blockquote>
-              We measure our success not by the size of the deal, but by the
-              soundness of the decision.
-            </blockquote>
-            <div className="attr">— The Tyrian Advisory principle</div>
-          </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="section cta">
-        <div className="container">
-          <h2>Let&rsquo;s discuss what&rsquo;s next for your enterprise.</h2>
-          <p>
-            Whether you are shaping strategy, raising capital, or considering a
-            transaction, a conversation is the right place to begin.
-          </p>
-          <Link href="/contact" className="btn btn-dark">
-            Arrange a conversation
-          </Link>
-        </div>
-      </section>
     </>
   );
 }

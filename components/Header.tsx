@@ -1,13 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const solid = scrolled || open;
 
   return (
-    <header className="site-header">
+    <header className={solid ? "site-header solid" : "site-header"}>
       <div className="container header-inner">
         <Link href="/" className="brand" onClick={() => setOpen(false)}>
           <span className="brand-mark">T</span>
