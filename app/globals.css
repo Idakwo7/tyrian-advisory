@@ -16,6 +16,8 @@
 
   --serif: var(--font-quicksand), "Segoe UI", Helvetica, Arial, sans-serif;
   --sans: var(--font-quicksand), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* The hero's serif, now shared by every large heading. */
+  --display: var(--font-noto-serif), Georgia, "Times New Roman", serif;
 
   --maxw: 1180px;
   --radius: 4px;
@@ -65,11 +67,18 @@ a {
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--serif);
   font-weight: 500;
   line-height: 1.15;
   letter-spacing: -0.01em;
   color: var(--ink);
+}
+/* Large headings carry the hero's serif. h3/h4 stay on the sans — they are
+   card and step titles, and serif at that size muddies them. */
+h1, h2 {
+  font-family: var(--display);
+}
+h3, h4 {
+  font-family: var(--serif);
 }
 
 .container {
@@ -175,20 +184,53 @@ h1, h2, h3, h4 {
   position: sticky;
   top: 0;
   z-index: 50;
+  padding: 0 clamp(16px, 3vw, 28px);
   background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: background 0.28s ease, border-color 0.28s ease, backdrop-filter 0.28s ease;
+  pointer-events: none;
+  transition: padding-top 0.32s ease;
 }
 .site-header.solid {
-  background: rgba(250, 250, 250, 0.8);
-  backdrop-filter: blur(12px);
-  border-bottom-color: var(--line);
+  padding-top: 14px;
+}
+.header-shell {
+  width: 100%;
+  max-width: calc(var(--maxw) + 48px);
+  margin: 0 auto;
+  pointer-events: auto;
+}
+.header-bar {
+  position: relative;
+  background: rgba(248, 244, 238, 0.42);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition:
+    background 0.28s ease,
+    border-color 0.28s ease,
+    backdrop-filter 0.28s ease,
+    box-shadow 0.28s ease,
+    border-radius 0.32s ease;
+}
+.site-header.solid .header-bar {
+  background: rgba(248, 244, 238, 0.68);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-top: 1px solid rgba(231, 221, 225, 0.65);
+  border-color: rgba(231, 221, 225, 0.65);
+  border-radius: 16px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 4px 24px rgba(36, 16, 25, 0.08);
 }
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 74px;
+  padding: 0 24px;
 }
 .brand {
   display: flex;
@@ -226,6 +268,18 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   gap: 30px;
+}
+@media (min-width: 641px) {
+  .header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-right: 20px;
+  }
+  .header-inner {
+    flex: 0 1 auto;
+  }
 }
 .nav a {
   font-size: 15px;
@@ -329,7 +383,6 @@ h1, h2, h3, h4 {
   50% { transform: translateY(10px); }
 }
 .hero h1 {
-  font-family: var(--font-noto-serif), Georgia, "Times New Roman", serif;
   color: var(--ink);
   font-size: clamp(40.7px, 5.4vw, 66.3px);
   line-height: 1.08;
@@ -338,6 +391,10 @@ h1, h2, h3, h4 {
 }
 .hero h1 .accent {
   color: var(--gold);
+}
+/* Breaks the second sentence onto its own line. */
+.hero h1 .hero-line {
+  display: block;
 }
 .hero p {
   font-size: 20.3px;
@@ -362,7 +419,7 @@ h1, h2, h3, h4 {
   flex: 0 0 auto;
 }
 .hero-stat .num {
-  font-family: var(--font-noto-serif), Georgia, "Times New Roman", serif;
+  font-family: var(--display);
   font-weight: 600;
   font-size: clamp(32px, 3.6vw, 46px);
   line-height: 1;
@@ -527,6 +584,21 @@ h1, h2, h3, h4 {
   background-position: center 28%;
   background-repeat: no-repeat;
 }
+/* Vignette overlay: darkest at the edges so it pulls the eye to the centred
+   quote and lets the notched tabs blend into the ivory sections either side,
+   while the aubergine tint keeps the whole band on-palette. */
+.quote::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 85% 75% at 50% 50%,
+    rgba(36, 16, 25, 0.4) 0%,
+    rgba(36, 16, 25, 0.62) 55%,
+    rgba(36, 16, 25, 0.88) 100%
+  );
+  pointer-events: none;
+}
 .quote-panel {
   position: relative;
   z-index: 1;
@@ -534,35 +606,121 @@ h1, h2, h3, h4 {
   max-width: 900px;
   margin: 0 auto;
 }
-/* Aubergine wash keeps the quote legible over the photograph. */
-.quote::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(150deg, rgba(36, 16, 25, 0.84), rgba(59, 29, 43, 0.74));
-  pointer-events: none;
-}
 .quote-panel blockquote {
-  font-family: var(--font-noto-serif), Georgia, "Times New Roman", serif;
-  font-size: clamp(26px, 3.4vw, 44px);
-  line-height: 1.3;
+  font-family: var(--display);
+  font-size: clamp(27px, 3.6vw, 46px);
+  line-height: 1.36;
+  /* Display sizes need tightening; the default tracking reads loose. */
+  letter-spacing: -0.015em;
   color: var(--white);
-  max-width: 18ch;
+  /* Tightest measure that sets the quote as three near-equal lines rather
+     than a five-line stack. */
+  max-width: 26ch;
   margin: 0 auto;
+  /* Even line lengths instead of a long/short ragged rag. */
+  text-wrap: balance;
+  text-shadow: 0 2px 28px rgba(36, 16, 25, 0.6);
+}
+/* Real typographic quote marks set in champagne gold, rather than a floating
+   decorative glyph the text has to make room for. */
+.quote-panel blockquote::before,
+.quote-panel blockquote::after {
+  color: var(--gold-light);
+  font-size: 1.1em;
+}
+.quote-panel blockquote::before {
+  content: "\201C";
+  margin-right: 0.04em;
+}
+.quote-panel blockquote::after {
+  content: "\201D";
+  margin-left: 0.04em;
 }
 .quote-panel figcaption {
-  margin-top: 26px;
-  font-size: 15px;
-  letter-spacing: 0.14em;
+  margin-top: 38px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  /* Small gold type over a photograph needs more support than the display
+     serif does. */
+  text-shadow: 0 1px 12px rgba(36, 16, 25, 0.9);
+  /* Offsets the trailing letter-space so the label sits optically centred. */
+  text-indent: 0.24em;
   text-transform: uppercase;
   color: var(--gold-light);
 }
+/* Hairline that fades out at both ends — softer than a hard-stopped bar. */
+.quote-panel figcaption::before {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 1px;
+  margin: 0 auto 18px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--gold-light) 30%,
+    var(--gold-light) 70%,
+    transparent
+  );
+  transform: scaleX(0);
+}
+
+/* Reveal — the quote rises, then the rule draws out from the centre and the
+   attribution follows it in. */
+.quote-panel blockquote,
+.quote-panel figcaption {
+  opacity: 0;
+  transform: translateY(16px);
+}
+.quote-panel.run blockquote {
+  animation: quoterise 0.7s cubic-bezier(0.33, 0, 0.2, 1) forwards;
+}
+.quote-panel.run figcaption::before {
+  animation: ruledraw 0.5s cubic-bezier(0.33, 0, 0.2, 1) 0.4s forwards;
+}
+.quote-panel.run figcaption {
+  animation: quoterise 0.5s cubic-bezier(0.33, 0, 0.2, 1) 0.45s forwards;
+}
+@keyframes quoterise {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ruledraw {
+  to { transform: scaleX(1); }
+}
+/* Reduced motion / no-JS fallback: show the finished state. */
+.quote-panel.shown blockquote,
+.quote-panel.shown figcaption {
+  opacity: 1;
+  transform: none;
+}
+.quote-panel.shown figcaption::before { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .quote-panel blockquote,
+  .quote-panel figcaption {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .quote-panel figcaption::before {
+    transform: scaleX(1);
+    animation: none;
+  }
+}
+
 @media (max-width: 640px) {
   .quote {
     min-height: 420px;
     padding: 88px 24px;
     /* fixed attachment is unreliable on mobile browsers */
     background-attachment: scroll;
+  }
+  /* The 26ch measure already clamps to the container here, so the quote gets
+     the full column width instead of being narrowed twice. */
+  .quote-panel blockquote {
+    letter-spacing: -0.01em;
+    text-shadow: 0 2px 18px rgba(36, 16, 25, 0.6);
   }
 }
 
@@ -675,60 +833,194 @@ h1, h2, h3, h4 {
   margin-bottom: 16px;
   font-size: 17.7px;
 }
+/* Second column of the about grid — the four values share one Tyrian-purple
+   panel, stacked vertically. Opposing corners are chamfered so the silhouette
+   reads as its own shape rather than a repeat of the hero's tablet notches. */
 .about-values {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-top: 8px;
+  /* Panel padding, named so the mobile override can retune it in one place. */
+  --rail-x: 40px;
+  --pad-y: 44px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  padding: var(--pad-y) var(--rail-x);
+  /* Flat Tyrian field — no blend, so text contrast is identical everywhere on
+     the panel instead of drifting toward one corner. */
+  background: #4d022e;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 52px) 0,
+    100% 52px,
+    100% 100%,
+    52px 100%,
+    0 calc(100% - 52px)
+  );
 }
 .value {
-  border-left: 2px solid var(--gold);
-  padding-left: 16px;
+  position: relative;
+  padding-left: 22px;
+}
+/* Neon rule — bright core with a champagne halo. Inset from the panel edge so
+   the glow never spills into the clipped corners. */
+.value::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 3px;
+  bottom: 3px;
+  width: 3px;
+  border-radius: 3px;
+  /* Champagne again now the field is Tyrian. */
+  background: var(--gold-light);
+  box-shadow:
+    0 0 4px rgba(194, 161, 91, 0.95),
+    0 0 10px rgba(194, 161, 91, 0.6),
+    0 0 20px rgba(194, 161, 91, 0.32);
+}
+/* The travelling light lives inside each rail rather than over the column, so
+   it is clipped to the champagne rule and vanishes across the gaps. Each rail
+   holds the band out of view until its turn, which hands the pulse from one
+   rule to the next and reads as a single light making one slow pass. */
+.value::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 3px;
+  bottom: 3px;
+  width: 5px;
+  border-radius: 3px;
+  pointer-events: none;
+  /* A wide, low-alpha swell rather than a defined band, so it drifts over the
+     rule like vapour. The falloff has to stay inside 33%–67% of the gradient:
+     outside that it would still be on screen at the parked positions and the
+     hand-off between rails would stop being clean. */
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 35%,
+    rgba(255, 250, 238, 0.05) 41%,
+    rgba(255, 250, 238, 0.22) 50%,
+    rgba(255, 250, 238, 0.05) 59%,
+    transparent 65%,
+    transparent 100%
+  );
+  background-size: 100% 300%;
+  background-repeat: no-repeat;
+  /* drop-shadow follows the band's alpha, so the haze travels with it instead
+     of ringing the whole rail the way box-shadow would. The blur softens the
+     leading and trailing edges so it reads as diffuse rather than a stripe. */
+  filter: blur(1px) drop-shadow(0 0 7px rgba(194, 161, 91, 0.3));
+  animation: railpulse-1 28s linear infinite;
+}
+.value:nth-child(2)::after { animation-name: railpulse-2; }
+.value:nth-child(3)::after { animation-name: railpulse-3; }
+.value:nth-child(4)::after { animation-name: railpulse-4; }
+
+/* 100% parks the band above the rail, 0% below it — both out of sight. Each
+   rail sweeps 100%→0% on the way down and 0%→100% on the way back, holding
+   off-screen the rest of the cycle. Staggering the windows by 12.5% walks the
+   light 1→2→3→4 over the first half and 4→3→2→1 over the second. */
+@keyframes railpulse-1 {
+  0% { background-position: 0 100%; }
+  12.5% { background-position: 0 0%; }
+  87.5% { background-position: 0 0%; }
+  100% { background-position: 0 100%; }
+}
+@keyframes railpulse-2 {
+  0%, 12.5% { background-position: 0 100%; }
+  25% { background-position: 0 0%; }
+  75% { background-position: 0 0%; }
+  87.5%, 100% { background-position: 0 100%; }
+}
+@keyframes railpulse-3 {
+  0%, 25% { background-position: 0 100%; }
+  37.5% { background-position: 0 0%; }
+  62.5% { background-position: 0 0%; }
+  75%, 100% { background-position: 0 100%; }
+}
+@keyframes railpulse-4 {
+  0%, 37.5% { background-position: 0 100%; }
+  50% { background-position: 0 0%; }
+  62.5%, 100% { background-position: 0 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .value::after { animation: none; opacity: 0; }
 }
 .value h4 {
   font-family: var(--sans);
   font-size: 16.1px;
   font-weight: 700;
   margin-bottom: 4px;
+  color: var(--white);
 }
 .value p {
   font-size: 15px;
-  color: var(--slate);
+  color: rgba(255, 255, 255, 0.72);
   margin: 0;
 }
-.about-panel {
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-left: 4px solid var(--gold);
-  border-radius: var(--radius);
-  padding: 48px 44px;
-  color: var(--ink);
+/* Client testimonial — social proof leading into the closing CTA. It sits on
+   the footer's dark aubergine, so the surface is a translucent lift rather
+   than a card, and shares the CTA's 720px measure so the two align. */
+.testimonial {
   position: relative;
   overflow: hidden;
+  max-width: 720px;
+  margin: 0 auto 56px;
+  padding: 36px 40px 32px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid var(--gold-light);
+  border-radius: var(--radius);
+  text-align: left;
 }
-.about-panel::before {
-  content: "“";
+/* Oversized mark set behind the text, top-right so it never collides with
+   the rating row. */
+.testimonial::before {
+  content: "\201C";
   position: absolute;
-  top: 6px;
-  left: 24px;
-  font-family: var(--serif);
-  font-size: 139.1px;
-  color: rgba(102, 2, 60, 0.18);
+  top: 8px;
+  right: 24px;
+  font-family: var(--display);
+  font-size: 120px;
   line-height: 1;
+  color: rgba(194, 161, 91, 0.16);
+  pointer-events: none;
 }
-.about-panel blockquote {
-  font-family: var(--serif);
-  font-size: 24.6px;
-  line-height: 1.45;
-  margin: 40px 0 26px;
+.testimonial-rating {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 18px;
+  /* Champagne gold clears 6:1 on the aubergine ground, so the rating can use
+     the real brand tone here rather than the darkened one a white card needed. */
+  color: var(--gold-light);
+}
+.testimonial blockquote {
+  font-family: var(--display);
+  font-size: 20px;
+  line-height: 1.55;
+  margin: 0 0 24px;
   position: relative;
   z-index: 1;
-  color: var(--ink);
+  color: rgba(255, 255, 255, 0.92);
 }
-.about-panel .attr {
-  font-size: 15px;
-  color: var(--gold-dark);
-  letter-spacing: 0.04em;
+.testimonial figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.testimonial-name {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 15.5px;
+  color: var(--white);
+}
+.testimonial-role {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
 }
 
 /* ---------- CTA ---------- */
@@ -1023,11 +1315,17 @@ h1, h2, h3, h4 {
     right: 0;
     flex-direction: column;
     align-items: stretch;
-    background: var(--paper);
+    background: rgba(248, 244, 238, 0.75);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
     padding: 20px 20px 26px;
     gap: 16px;
-    border-bottom: 1px solid var(--line);
-    box-shadow: 0 12px 24px rgba(36, 55, 67, 0.08);
+    border-top: 1px solid rgba(231, 221, 225, 0.45);
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      0 12px 24px rgba(36, 16, 25, 0.08);
   }
   .nav.open .btn { justify-content: center; }
 
@@ -1044,9 +1342,24 @@ h1, h2, h3, h4 {
   .section-head { margin-bottom: 40px; }
   .services-grid { grid-template-columns: 1fr; }
   .slider-track .service-card { flex-basis: 84%; }
-  .about-values { grid-template-columns: 1fr; }
-  .about-panel { padding: 40px 28px; }
-  .about-panel blockquote { font-size: 21.4px; }
+  /* Tighter panel and a smaller chamfer so the cut stays proportional. The
+     rail/padding vars move with it so the travelling light stays centred. */
+  .about-values {
+    --rail-x: 26px;
+    --pad-y: 34px;
+    gap: 22px;
+    clip-path: polygon(
+      0 0,
+      calc(100% - 34px) 0,
+      100% 34px,
+      100% 100%,
+      34px 100%,
+      0 calc(100% - 34px)
+    );
+  }
+  .testimonial { padding: 28px 24px 26px; margin-bottom: 44px; }
+  .testimonial blockquote { font-size: 18px; }
+  .testimonial::before { font-size: 92px; right: 14px; }
   .detail-aside { position: static; }
   .form { padding: 26px 22px; }
   .contact-detail .k { width: 74px; }

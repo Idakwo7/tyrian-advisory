@@ -4,6 +4,7 @@ import HeroFloaters from "@/components/HeroFloaters";
 import NotchTop from "@/components/NotchTop";
 import ServicesSlider from "@/components/ServicesSlider";
 import ApproachSteps from "@/components/ApproachSteps";
+import QuotePanel from "@/components/QuotePanel";
 
 export default function Home() {
   return (
@@ -16,8 +17,8 @@ export default function Home() {
             Independent Advisory · Strategy · Capital · Transactions
           </span>
           <h1>
-            Every enterprise has <span className="accent">defining moments</span>. We
-            advise them.
+            Every enterprise has <span className="accent">defining moments</span>.{" "}
+            <span className="hero-line">We advise them.</span>
           </h1>
           <p>
           Tyrian Advisory partners with boards, investors, and families to shape strategy, structure capital, and execute the transactions that create lasting value — across Africa's most dynamic markets.
@@ -37,7 +38,6 @@ export default function Home() {
 
       {/* Services */}
       <section className="section services screen" id="services">
-        <NotchTop />
         <div className="container">
           <div className="section-head">
             <span className="eyebrow">What we do</span>
@@ -73,13 +73,7 @@ export default function Home() {
       {/* Quote */}
       <section className="quote screen">
         <NotchTop targetClass="quote" clipId="quote-notch" includeBottom />
-        <figure className="quote-panel">
-          <blockquote>
-            We measure our success not by the size of the deal, but by the
-            soundness of the decision.
-          </blockquote>
-          <figcaption>— The Tyrian Advisory principle</figcaption>
-        </figure>
+        <QuotePanel />
       </section>
 
       {/* About teaser */}
@@ -98,23 +92,24 @@ export default function Home() {
               transactions — bringing institutional discipline and the discretion of
               a trusted advisor to every engagement.
             </p>
-            <div className="about-values">
-              <div className="value">
-                <h4>Independence</h4>
-                <p>Advice aligned solely with your interests.</p>
-              </div>
-              <div className="value">
-                <h4>Discretion</h4>
-                <p>Confidentiality at the core of every mandate.</p>
-              </div>
-              <div className="value">
-                <h4>Rigor</h4>
-                <p>Analytical depth behind every recommendation.</p>
-              </div>
-              <div className="value">
-                <h4>Partnership</h4>
-                <p>Relationships measured in decades, not deals.</p>
-              </div>
+          </div>
+
+          <div className="about-values">
+            <div className="value">
+              <h4>Independence</h4>
+              <p>Advice aligned solely with your interests.</p>
+            </div>
+            <div className="value">
+              <h4>Discretion</h4>
+              <p>Confidentiality at the core of every mandate.</p>
+            </div>
+            <div className="value">
+              <h4>Rigor</h4>
+              <p>Analytical depth behind every recommendation.</p>
+            </div>
+            <div className="value">
+              <h4>Partnership</h4>
+              <p>Relationships measured in decades, not deals.</p>
             </div>
           </div>
         </div>

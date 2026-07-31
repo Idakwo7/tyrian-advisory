@@ -1,12 +1,33 @@
 import Link from "next/link";
 import { services } from "@/lib/services";
-import NotchTop from "@/components/NotchTop";
 
 export default function Footer() {
   return (
     <footer className="site-footer">
-      <NotchTop targetClass="site-footer" clipId="footer-notch" includeBottom={false} />
       <div className="container">
+        <figure className="testimonial">
+          <div
+            className="testimonial-rating"
+            role="img"
+            aria-label="Rated 5 out of 5"
+          >
+            {[0, 1, 2, 3, 4].map((i) => (
+              <svg key={i} width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+            ))}
+          </div>
+          <blockquote>
+            They were the only advisors in the room willing to tell us what we
+            did not want to hear &mdash; and they were right. The deal we walked
+            away from mattered as much as the one we closed.
+          </blockquote>
+          <figcaption>
+            <span className="testimonial-name">Client name</span>
+            <span className="testimonial-role">Title &middot; Organisation</span>
+          </figcaption>
+        </figure>
+
         <div className="footer-cta">
           <h2>Let&rsquo;s discuss what&rsquo;s next for your enterprise.</h2>
           <p>
