@@ -1,5 +1,6 @@
 import Link from "next/link";
 import HeroStats from "@/components/HeroStats";
+import HeroEyebrow from "@/components/HeroEyebrow";
 import HeroFloaters from "@/components/HeroFloaters";
 import NotchTop from "@/components/NotchTop";
 import ServicesSlider from "@/components/ServicesSlider";
@@ -13,9 +14,7 @@ export default function Home() {
       <section className="hero screen">
         <HeroFloaters />
         <div className="container hero-inner">
-          <span className="eyebrow">
-            Independent Advisory · Strategy · Capital · Transactions
-          </span>
+          <HeroEyebrow />
           <h1>
             Every enterprise has <span className="accent">defining moments</span>.{" "}
             <span className="hero-line">We advise them.</span>

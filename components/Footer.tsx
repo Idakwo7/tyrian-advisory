@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { services } from "@/lib/services";
+import SocialLinks from "@/components/SocialLinks";
 
 export default function Footer() {
   return (
@@ -49,6 +50,7 @@ export default function Footer() {
               An independent advisory firm partnering with boards, investors and
               families to shape strategy, structure capital, and create enduring value.
             </p>
+            <SocialLinks />
           </div>
 
           <div className="footer-col">

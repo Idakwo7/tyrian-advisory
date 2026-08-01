@@ -97,6 +97,59 @@ h3, h4 {
   color: var(--gold-dark);
 }
 
+/* Cycling hero eyebrow — one phrase at a time, each character flipping up off
+   its own baseline. The perspective sits on the wrapper so every character
+   shares one vanishing point instead of each rotating in its own space. */
+.hero-eyebrow {
+  display: inline-block;
+  /* Larger than the section eyebrows — this one is the hero's own line, not a
+     label sitting above a heading. */
+  font-size: 14px;
+  perspective: 460px;
+  /* Holds the line's height while characters are mid-flip. */
+  min-height: 1.3em;
+}
+.eyebrow-track {
+  display: inline-block;
+  white-space: pre;
+}
+.ec {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity, filter;
+}
+.ec-in {
+  opacity: 0;
+  animation: ecIn 0.5s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+  animation-delay: calc(var(--i) * 26ms);
+}
+.ec-out {
+  animation: ecOut 0.34s cubic-bezier(0.4, 0, 0.7, 0.2) forwards;
+  animation-delay: calc(var(--i) * 12ms);
+}
+@keyframes ecIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em) rotateX(-88deg);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+    filter: blur(0);
+  }
+}
+@keyframes ecOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-0.42em) rotateX(72deg);
+  }
+}
+
 .section {
   padding: 96px 0;
 }
@@ -127,7 +180,18 @@ h3, h4 {
   border-radius: var(--radius);
   border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.2s ease;
+  /* Named properties rather than `all`, so nothing unintended animates. */
+  transition:
+    background-color 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Enters a little quicker than it leaves — the button answers promptly, then
+   settles back rather than snapping. */
+.btn:hover {
+  transition-duration: 0.26s;
 }
 
 .btn-primary {
@@ -138,11 +202,12 @@ h3, h4 {
     0 0 12px rgba(102, 2, 60, 0.26);
 }
 .btn-primary:hover {
-  background: var(--gold);
-  transform: translateY(-1px);
+  /* No colour shift — the lift and a slightly deeper glow carry it. Changing
+     the fill as well made the hover read as a jump rather than a response. */
+  transform: translateY(-2px);
   box-shadow:
-    0 4px 14px rgba(102, 2, 60, 0.30),
-    0 0 20px rgba(102, 2, 60, 0.44);
+    0 6px 16px rgba(102, 2, 60, 0.28),
+    0 0 18px rgba(102, 2, 60, 0.34);
 }
 
 /* Outline / secondary button on light backgrounds */
@@ -284,9 +349,15 @@ h3, h4 {
 .nav a {
   font-size: 15px;
   color: var(--slate);
-  transition: color 0.2s;
 }
-.nav a:hover {
+/* Scoped off buttons: as `.nav a` this outranked `.btn` and replaced its whole
+   transition, leaving the CTA's lift and glow with nothing to animate. */
+.nav a:not(.btn) {
+  transition: color 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Excludes buttons — otherwise this outranks `.nav .btn-primary` on
+   specificity and turns the CTA's white label purple on hover. */
+.nav a:not(.btn):hover {
   color: var(--gold-dark);
 }
 .nav .btn {
@@ -350,6 +421,9 @@ h3, h4 {
 .hero-floater-inner {
   width: 100%;
   height: 100%;
+  /* Containing block for the fill image. */
+  position: relative;
+  overflow: hidden;
   /* Tablet form — rounded corners; the clip-path cuts the side notches. */
   border-radius: 18px;
   background: linear-gradient(150deg, var(--navy-700), var(--navy-900) 72%);
@@ -360,13 +434,13 @@ h3, h4 {
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
-.hero-floater-label {
-  font-family: var(--sans);
-  font-size: 11px;
-  letter-spacing: 0.28em;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.32);
+.hero-floater-img {
+  object-fit: cover;
+  /* The source crops are wider than the tablet frame; bias toward the upper
+     third so faces stay in shot rather than being cut at the chin. */
+  object-position: center 32%;
   user-select: none;
+  -webkit-user-drag: none;
 }
 @keyframes floatbob {
   0%, 100% { transform: translateY(0); }
@@ -488,6 +562,20 @@ h3, h4 {
 }
 .slider-viewport {
   overflow: hidden;
+  /* Horizontal gestures come to the pointer handlers; vertical ones are left
+     to the browser so the page still scrolls through the slider. */
+  touch-action: pan-y;
+  cursor: grab;
+  /* Stops a drag from turning into a text selection across the cards. */
+  user-select: none;
+  -webkit-user-select: none;
+}
+.slider-viewport.dragging {
+  cursor: grabbing;
+}
+/* Hover states while dragging just read as flicker under the cursor. */
+.slider-viewport.dragging .service-card:hover {
+  background: var(--navy-800);
 }
 .slider-track {
   display: flex;
@@ -516,12 +604,17 @@ h3, h4 {
   cursor: pointer;
   display: grid;
   place-items: center;
-  transition: all 0.2s ease;
+  transition:
+    background-color 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .slider-btn:hover {
   border-color: var(--gold-light);
   background: rgba(194, 161, 91, 0.12);
   transform: translateY(-1px);
+  transition-duration: 0.26s;
 }
 
 .service-card {
@@ -834,8 +927,7 @@ h3, h4 {
   font-size: 17.7px;
 }
 /* Second column of the about grid — the four values share one Tyrian-purple
-   panel, stacked vertically. Opposing corners are chamfered so the silhouette
-   reads as its own shape rather than a repeat of the hero's tablet notches. */
+   panel, stacked vertically. */
 .about-values {
   /* Panel padding, named so the mobile override can retune it in one place. */
   --rail-x: 40px;
@@ -848,14 +940,7 @@ h3, h4 {
   /* Flat Tyrian field — no blend, so text contrast is identical everywhere on
      the panel instead of drifting toward one corner. */
   background: #4d022e;
-  clip-path: polygon(
-    0 0,
-    calc(100% - 52px) 0,
-    100% 52px,
-    100% 100%,
-    52px 100%,
-    0 calc(100% - 52px)
-  );
+  border-radius: 16px;
 }
 .value {
   position: relative;
@@ -1085,6 +1170,39 @@ h3, h4 {
   font-size: 15.5px;
   max-width: 320px;
 }
+.social-links {
+  display: flex;
+  gap: 12px;
+  list-style: none;
+  margin-top: 22px;
+  padding: 0;
+}
+.social-link {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.72);
+  transition:
+    background-color 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.social-link svg {
+  width: 16px;
+  height: 16px;
+}
+.social-link:hover {
+  background: rgba(194, 161, 91, 0.14);
+  border-color: var(--gold-light);
+  color: var(--gold-light);
+  transform: translateY(-2px);
+  transition-duration: 0.26s;
+}
+
 .footer-col h5 {
   font-family: var(--sans);
   color: var(--white);
@@ -1305,9 +1423,11 @@ h3, h4 {
   .section { padding: 60px 0; }
   .container { padding: 0 20px; }
 
-  .nav { display: none; }
   .nav-toggle { display: block; }
-  .nav.open {
+  /* The panel stays laid out and is hidden by opacity/visibility rather than
+     `display`, which cannot be transitioned. Absolute positioning keeps it out
+     of the header's flow either way. */
+  .nav {
     display: flex;
     position: absolute;
     top: 74px;
@@ -1315,7 +1435,7 @@ h3, h4 {
     right: 0;
     flex-direction: column;
     align-items: stretch;
-    background: rgba(248, 244, 238, 0.75);
+    background: rgba(248, 244, 238, 0.92);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     padding: 20px 20px 26px;
@@ -1326,6 +1446,27 @@ h3, h4 {
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.35),
       0 12px 24px rgba(36, 16, 25, 0.08);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    pointer-events: none;
+    /* visibility flips only once the fade-out has finished, so the panel does
+       not vanish mid-animation — and stays out of the tab order while closed. */
+    transition:
+      opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 0.48s;
+  }
+  .nav.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition:
+      opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s;
   }
   .nav.open .btn { justify-content: center; }
 
@@ -1342,20 +1483,13 @@ h3, h4 {
   .section-head { margin-bottom: 40px; }
   .services-grid { grid-template-columns: 1fr; }
   .slider-track .service-card { flex-basis: 84%; }
-  /* Tighter panel and a smaller chamfer so the cut stays proportional. The
-     rail/padding vars move with it so the travelling light stays centred. */
+  /* Tighter panel. The rail/padding vars move with it so the travelling light
+     stays centred on the rules. */
   .about-values {
     --rail-x: 26px;
     --pad-y: 34px;
     gap: 22px;
-    clip-path: polygon(
-      0 0,
-      calc(100% - 34px) 0,
-      100% 34px,
-      100% 100%,
-      34px 100%,
-      0 calc(100% - 34px)
-    );
+    border-radius: 12px;
   }
   .testimonial { padding: 28px 24px 26px; margin-bottom: 44px; }
   .testimonial blockquote { font-size: 18px; }

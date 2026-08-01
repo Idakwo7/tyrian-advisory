@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 
 type Floater = {
   w: number;
@@ -8,6 +9,11 @@ type Floater = {
   top: string;
   right: string; // anchored to the right edge so it never exceeds full width
   clip: string;
+  src: string;
+  // Width the source is actually scaled to once object-fit:cover fills the
+  // frame — larger than `w` whenever the source is wider than the frame, which
+  // is what `sizes` has to advertise or Next serves a soft, upscaled crop.
+  coverW: number;
   float: number; // bob duration (s)
   delay: number;
   // Drift direction — "x" moves right-to-left, "y-down" bobs downward so a
@@ -24,36 +30,43 @@ const TABLET =
 const FLOATERS: Floater[] = [
   // Largest — flush with the container's right edge (nav CTA / "14+" line).
   {
-    w: 216,
-    h: 300,
-    top: "calc(13% + 4px)",
+    w: 248,
+    h: 345,
+    top: "calc(13% - 16px)",
     right: "24px",
     clip: TABLET,
+    src: "/hm1.jpg",
+    coverW: 518, // 900x600 source filling a 345px-tall frame
     float: 7,
     delay: 0,
     axis: "x",
   },
 
-  // Medium — to its left with a clear 28px gap (spans 268–398px from the right).
+  // Medium — to its left with a clear 28px gap (spans 300–450px from the right,
+  // clearing the largest block's new 272px right edge).
   {
-    w: 130,
-    h: 180,
+    w: 150,
+    h: 207,
     top: "30%",
-    right: "268px",
+    right: "300px",
     clip: TABLET,
+    src: "/hm2.jpg",
+    coverW: 217, // 560x536 source filling a 207px-tall frame
     float: 7,
     delay: 0,
   },
   // Small — same width as the medium, stacked directly on top of it so the two
   // form a column beside the largest. Height unchanged.
-  // Positioned off the medium's 30% top (own height 120px + 26px gap) so the
+  // Positioned off the medium's 30% top (own height 138px + 26px gap) so the
   // stack gap stays fixed no matter how the container is offset or resized.
   {
-    w: 130,
-    h: 120,
-    top: "calc(30% - 146px)",
-    right: "268px",
+    w: 150,
+    h: 138,
+    top: "calc(30% - 164px)",
+    right: "300px",
     clip: TABLET,
+    src: "/hm3.jpg",
+    coverW: 150, // square source, frame width is the binding constraint
     float: 7,
     delay: 0,
     axis: "y-down",
@@ -120,10 +133,17 @@ function FloaterBlock({ f }: { f: Floater }) {
           animationDuration: `${f.float}s`,
           animationDelay: `${f.delay}s`,
         }}
-        role="img"
-        aria-label="Decorative image placeholder"
       >
-        <span className="hero-floater-label">IMAGE</span>
+        <Image
+          src={f.src}
+          alt=""
+          fill
+          sizes={`${f.coverW}px`}
+          className="hero-floater-img"
+          // Without this the browser's native image drag hijacks the pointer
+          // drag and leaves a ghost image behind.
+          draggable={false}
+        />
       </div>
     </div>
   );
