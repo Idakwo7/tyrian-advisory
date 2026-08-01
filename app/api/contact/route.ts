@@ -69,21 +69,21 @@ export async function POST(request: Request) {
   }
 
   const html = `
-    <h2>New enquiry — Tyrian Advisory</h2>
+    <h2>New enquiry for Tyrian Advisory</h2>
     <p><strong>Name:</strong> ${esc(name)}</p>
     <p><strong>Email:</strong> ${esc(email)}</p>
-    <p><strong>Company:</strong> ${esc(company) || "—"}</p>
-    <p><strong>Area of interest:</strong> ${esc(interest) || "—"}</p>
+    <p><strong>Company:</strong> ${esc(company) || "Not provided"}</p>
+    <p><strong>Area of interest:</strong> ${esc(interest) || "Not provided"}</p>
     <p><strong>Message:</strong></p>
     <p style="white-space:pre-wrap">${esc(message)}</p>
   `;
 
-  const text = `New enquiry — Tyrian Advisory
+  const text = `New enquiry for Tyrian Advisory
 
 Name: ${name}
 Email: ${email}
-Company: ${company || "—"}
-Area of interest: ${interest || "—"}
+Company: ${company || "Not provided"}
+Area of interest: ${interest || "Not provided"}
 
 Message:
 ${message}`;

@@ -20,7 +20,7 @@ export default function Footer() {
           </div>
           <blockquote>
             They were the only advisors in the room willing to tell us what we
-            did not want to hear &mdash; and they were right. The deal we walked
+            did not want to hear, and they were right. The deal we walked
             away from mattered as much as the one we closed.
           </blockquote>
           <figcaption>

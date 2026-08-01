@@ -35,7 +35,7 @@ export default function AboutPage() {
             <p>
               We deliberately keep our client relationships few and deep. Every
               engagement is led by senior advisors, and every recommendation is our
-              own — free of the conflicts that can cloud judgment.
+              own, free of the conflicts that can cloud judgment.
             </p>
             <p>
               Across eight connected practices, we help our clients see clearly,
@@ -45,10 +45,10 @@ export default function AboutPage() {
 
           <div className="about-panel">
             <blockquote>
-              The most important decisions deserve independent counsel — unclouded by
+              The most important decisions deserve independent counsel, unclouded by
               conflict and grounded in genuine expertise.
             </blockquote>
-            <div className="attr">— Our founding conviction</div>
+            <div className="attr">Our founding conviction</div>
           </div>
         </div>
       </section>
@@ -63,15 +63,13 @@ export default function AboutPage() {
           </div>
           <div className="approach-grid">
             <div className="approach-item">
-              <span className="step">—</span>
               <h3>Independence</h3>
               <p>
                 We advise in your interest alone. No hidden incentives, no product to
-                sell — only counsel we would act on ourselves.
+                sell, only counsel we would act on ourselves.
               </p>
             </div>
             <div className="approach-item">
-              <span className="step">—</span>
               <h3>Discretion</h3>
               <p>
                 Confidentiality is not a policy; it is the foundation of every
@@ -79,7 +77,6 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="approach-item">
-              <span className="step">—</span>
               <h3>Longevity</h3>
               <p>
                 We build relationships intended to last across cycles, transactions

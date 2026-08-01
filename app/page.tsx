@@ -20,7 +20,7 @@ export default function Home() {
             <span className="hero-line">We advise them.</span>
           </h1>
           <p>
-          Tyrian Advisory partners with boards, investors, and families to shape strategy, structure capital, and execute the transactions that create lasting value — across Africa's most dynamic markets.
+          Tyrian Advisory partners with boards, investors, and families to shape strategy, structure capital, and execute the transactions that create lasting value across Africa's most dynamic markets.
           </p>
           <div className="hero-actions">
             <Link href="/#services" className="btn btn-primary">
@@ -60,7 +60,7 @@ export default function Home() {
             </span>
             <h2>Independent, rigorous, and aligned to your interests.</h2>
             <p>
-              We are not transaction brokers. We are trusted advisors — measured by
+              We are not transaction brokers. We are trusted advisors, measured by
               the quality of the decisions we help you make.
             </p>
           </div>
@@ -88,7 +88,7 @@ export default function Home() {
             </p>
             <p>
               We work with a select group of clients across strategy, capital and
-              transactions — bringing institutional discipline and the discretion of
+              transactions, bringing institutional discipline and the discretion of
               a trusted advisor to every engagement.
             </p>
           </div>

@@ -28,7 +28,7 @@ export default function ContactPage() {
             <h2>Speak with an advisor.</h2>
             <p>
               Every engagement begins with a conversation. Tell us a little about
-              your situation and we will arrange the right introduction — discreetly
+              your situation and we will arrange the right introduction, discreetly
               and promptly.
             </p>
 
@@ -50,7 +50,7 @@ export default function ContactPage() {
             </div>
             <div className="contact-detail">
               <div className="k">Hours</div>
-              <div className="v">Monday – Friday, 9:00 – 18:00</div>
+              <div className="v">Monday to Friday, 9:00 to 18:00</div>
             </div>
           </div>
 

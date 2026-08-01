@@ -22,7 +22,7 @@ const notoSerif = Noto_Serif({
 
 export const metadata: Metadata = {
   title: {
-    default: "Tyrian Advisory — Corporate Strategy & Capital Advisory",
+    default: "Tyrian Advisory | Corporate Strategy & Capital Advisory",
     template: "%s | Tyrian Advisory",
   },
   description:

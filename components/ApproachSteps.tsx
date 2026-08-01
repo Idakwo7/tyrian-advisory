@@ -6,7 +6,7 @@ const STEPS = [
   {
     step: "01",
     title: "Understand",
-    body: "We begin with your objectives, constraints and context — not a template. The right answer starts with the right questions.",
+    body: "We begin with your objectives, constraints and context, not a template. The right answer starts with the right questions.",
   },
   {
     step: "02",
@@ -16,7 +16,7 @@ const STEPS = [
   {
     step: "03",
     title: "Execute",
-    body: "We stay in the room through execution — protecting value from mandate to close, and beyond.",
+    body: "We stay in the room through execution, protecting value from mandate to close, and beyond.",
   },
 ];
 
